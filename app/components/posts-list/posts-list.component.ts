@@ -1,6 +1,7 @@
 import { Component, Input } from "@angular/core";
 
 import { Post } from "../../models/post";
+import { Router } from '@angular/router';
 
 @Component({
     selector: "posts-list",
@@ -18,6 +19,14 @@ export class PostsListComponent {
      | La ruta a navegar es '/posts/users', pasando como parámetro el identificador del autor.                          |
      |------------------------------------------------------------------------------------------------------------------*/
 
+    constructor(
+        private _router: Router) { }
+
+     viewDetails(post: Post)
+     {
+         console.log(post);
+         this._router.navigate(["posts", post.id]);
+     }
     /*-----------------------------------------------------------------------------------------------------------------|
      | ~~~ Green Path ~~~                                                                                              |
      |-----------------------------------------------------------------------------------------------------------------|
