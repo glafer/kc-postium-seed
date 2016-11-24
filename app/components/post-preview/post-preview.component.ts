@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 import { Post } from "../../models/post";
+import { User } from '../../models/user';
 
 @Component({
     selector: "post-preview",
@@ -12,9 +13,14 @@ export class PostPreviewComponent {
     @Input() post: Post;
     
     @Output() selected: EventEmitter<Post> = new EventEmitter();
+    @Output() authorFilter: EventEmitter<User> = new EventEmitter();
 
     onPostClick(post: Post) {
         this.selected.emit(post);
+    }
+
+    onAuthorClick(user: User) {
+        this.authorFilter.emit(user);
     }
     /*------------------------------------------------------------------------------------------------------------------|
      | ~~~ Red Path ~~~                                                                                                 |

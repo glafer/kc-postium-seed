@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute} from "@angular/router";
 
 import { Post } from "../../models/post";
+import { User } from '../../models/user';
 
 @Component({
     templateUrl: "./app/components/post-details/post-details.component.html",
@@ -10,12 +11,19 @@ import { Post } from "../../models/post";
 export class PostDetailsComponent implements OnInit {
 
     post: Post;
+    user: User;
+    
+    @Output() authorFilter: EventEmitter<User> = new EventEmitter();
 
     constructor(private _activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
         this._activatedRoute.data.forEach((data: { post: Post}) => this.post = data.post);
         window.scrollTo(0, 0);
+    }
+
+    onAuthorClick(user: User) {
+        this.authorFilter.emit(user);
     }
 
     plainTextToHtml(text: string): string {
