@@ -7,7 +7,7 @@
 | referencia del formulario en él.                                                            |
 |---------------------------------------------------------------------------------------------|
 -->
-<form novalidate>
+<form #postRef="ngForm" (ngSubmit)="submitPost(postRef)" novalidate>
     <!--
     |-------------------------------------------------------------------------------------------------|
     | Purple Path                                                                                     |
@@ -19,7 +19,12 @@
     <input
         type="text"
         placeholder="Título"
-        class="u-full-width">
+        class="u-full-width"
+        id="title"
+        name="title"
+        ngModel
+        #nombreRef="ngModel"
+        required>
     <!--
     |-------------------------------------------------------------------------------------------------|
     | Purple Path                                                                                     |
@@ -31,6 +36,11 @@
     <textarea
         placeholder="Introduce tu historia"
         class="u-full-width georgia-font"
+        id="intro"
+        name="intro"
+        ngModel
+        #nombreRef="ngModel"
+        required
         autogrow></textarea>
     <!--
     |-------------------------------------------------------------------------------------------------|
@@ -43,6 +53,11 @@
     <textarea
         placeholder="Cuenta tu historia"
         class="u-full-width georgia-font"
+        id="body"
+        name="body"
+        ngModel
+        #nombreRef="ngModel"
+        required
         autogrow></textarea>
     <div>
         <div>
@@ -73,5 +88,5 @@
     | válido. Para ello vas a necesitar acceder al 'FormGroup' del formulario. |
     |--------------------------------------------------------------------------|
     -->
-    <button type="submit" class="button-primary u-pull-right">Publicar</button>
+    <button type="submit" class="button-primary u-pull-right" [disabled]="postRef.invalid">Publicar</button>
 </form>
