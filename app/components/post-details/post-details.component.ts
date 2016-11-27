@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute} from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Post } from "../../models/post";
 import { User } from '../../models/user';
+import { Category } from '../../models/category';
 
 @Component({
     templateUrl: "./app/components/post-details/post-details.component.html",
@@ -15,7 +16,8 @@ export class PostDetailsComponent implements OnInit {
     
     @Output() authorFilter: EventEmitter<User> = new EventEmitter();
 
-    constructor(private _activatedRoute: ActivatedRoute) { }
+    constructor(private _activatedRoute: ActivatedRoute,
+        private _router: Router) { }
 
     ngOnInit(): void {
         this._activatedRoute.data.forEach((data: { post: Post}) => this.post = data.post);
@@ -29,6 +31,10 @@ export class PostDetailsComponent implements OnInit {
     plainTextToHtml(text: string): string {
         return `<p>${text.replace(/\n/gi, "</p><p>")}</p>`;
     }
+
+    viewPostFilterByCategory(category: Category){
+         this._router.navigate(["posts", "categories", category.id]);
+     }
 
     /*---------------------------------------------------------------------------------------------------------------|
      | ~~~ Red Path ~~~                                                                                              |

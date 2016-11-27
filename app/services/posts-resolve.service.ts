@@ -12,9 +12,13 @@ export class PostsResolve implements Resolve<Post[]> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<Post[]> {
 
-    if (route.params["userId"] > 0)
+    if (route.params["userId"])
     {
         return this._postService.getUserPosts(+route.params["userId"]);
+    }
+    else if (route.params["categoryId"])
+    {
+        return this._postService.getCategoryPosts(+route.params["categoryId"]);
     }
     else
     {

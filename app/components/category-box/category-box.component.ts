@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Category } from "../../models/category";
 
@@ -10,6 +10,12 @@ import { Category } from "../../models/category";
 export class CategoryBoxComponent {
 
     @Input() categories: Category[];
+
+    @Output() categoryFilter: EventEmitter<Category> = new EventEmitter();
+
+    onClickCategory(category: Category) {
+        this.categoryFilter.emit(category);
+    }
 
     /*-------------------------------------------------------------------------------------------------------------------|
      | ~~~ Yellow Path ~~~                                                                                               |

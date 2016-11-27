@@ -29,7 +29,6 @@ export class PostService {
          |   - Filtro por fecha de publicación: publicationDate_lte=x (siendo x la fecha actual)        |
          |   - Ordenación: _sort=publicationDate&_order=DESC                                            |
          |----------------------------------------------------------------------------------------------*/
-         
         return this._http
                    .get(`${this._backendUri}/posts?publicationDate_lte=${Date.now()}&_sort=publicationDate&_order=DESC`)
                    .map((response: Response) => Post.fromJsonToList(response.json()));
@@ -83,8 +82,21 @@ export class PostService {
          |--------------------------------------------------------------------------------------------------*/
 
         return this._http
-                   .get(`${this._backendUri}/posts`)
-                   .map((response: Response) => Post.fromJsonToList(response.json()));
+                    .get(`${this._backendUri}/posts?publicationDate_lte=${Date.now()}&_sort=publicationDate&_order=DESC`)
+                    .map((response: Response) => {
+                        let posts: Post[] = [];
+                        let json: any[] = response.json();
+                        json.forEach((post) => {
+                            post.categories.forEach((category) => {
+                                if (category.id == id)
+                                {
+                                    posts.push(Post.fromJson(post));
+                                }
+                            })
+                           
+                       });
+                       return posts;
+                    });    
     }
 
     getPostDetails(id: number): Observable<Post> {
